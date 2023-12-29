@@ -1,4 +1,5 @@
 from tkinter import *
+from main import *
 
 
 class Botones:
@@ -8,6 +9,9 @@ class Botones:
           
     def salir():
         exit()
+    
+    def crear():
+        pass
         
 
 class Labels:
