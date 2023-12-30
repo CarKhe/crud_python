@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from clases.assets import *
-from main import Menu
+
 class Ventana(Frame,Botones,Labels,Inputs):
     def __init__(self,master=None):
         super().__init__(master,width=685,height=260)
@@ -9,8 +9,7 @@ class Ventana(Frame,Botones,Labels,Inputs):
         self.pack()
         self.create_widgets()
     
-    def f_nuevo():
-        exit()
+    
    
     
     def create_widgets(self):
@@ -36,6 +35,24 @@ class Ventana(Frame,Botones,Labels,Inputs):
         
         Botones.agregar_boton("btn_guardar",frame2,"Guardar",Botones.salir,"green","white",10,210,60,30)
         Botones.agregar_boton("btn_cancelar",frame2,"Cancelar",Botones.salir,"red","white",80,210,60,30)
+        
+        self.grid = ttk.Treeview(self,columns=("col1", "col2", "col3", "col4"))
+        
+        self.grid.column("#0",width=50)
+        self.grid.column("col1",width=60, anchor=CENTER)
+        self.grid.column("col2",width=90, anchor=CENTER)
+        self.grid.column("col3",width=90, anchor=CENTER)
+        self.grid.column("col4",width=90, anchor=CENTER)
+        
+        self.grid.heading("#0",text="Id", anchor=CENTER)
+        self.grid.heading("col1",text="ISO3", anchor=CENTER)
+        self.grid.heading("col2",text="Country Name", anchor=CENTER)
+        self.grid.heading("col3",text="Capital", anchor=CENTER)
+        self.grid.heading("col4",text="Currency Code", anchor=CENTER)
+        
+        self.grid.place(x=247,y=0,width=420,height=259)
+        
+        self.grid.insert("",END,text="1",values=("ARG","Argentina","Buenos Aires","ARS"))
         
         
       
