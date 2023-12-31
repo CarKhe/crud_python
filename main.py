@@ -1,10 +1,9 @@
 from tkinter import *
-from ventana import *
+from menu_principal import *
 
 def main():
-        root = Tk()
-        root.wm_title("Crud Python Mysql")
-        app = Ventana(root)
+        
+        app = MenuPrincipal("Menu Principal",685,260)
         app.mainloop()
         
 

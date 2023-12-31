@@ -1,4 +1,5 @@
 from conexion.conexion import MysqlConnection as MsqlC
+from tkinter import ttk
 
 class Countries(MsqlC):
     tabla = "countries"
@@ -7,6 +8,7 @@ class Countries(MsqlC):
     def __init__(self):
         super().__init__()
 
+
     def __str__(self):
         aux = self.to_list_cmd(f"SELECT * FROM {self.tabla}")
         return aux
@@ -14,6 +16,7 @@ class Countries(MsqlC):
     def consulta_paises(self):
         datos = self.search_all(f"SELECT * FROM {self.tabla}")
         return datos
+        
 
     def buscar_pais(self,id):
         condicion = "Id={}".format(id)
