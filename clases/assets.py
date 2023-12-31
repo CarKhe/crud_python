@@ -1,6 +1,6 @@
 from tkinter import *
 from main import *
-
+from countries import *
 
 class Botones:
     def agregar_boton(btn_name,frame,text,command,bg,fg,x,y,width,height):
@@ -11,7 +11,7 @@ class Botones:
         exit()
     
     def crear():
-       pass
+       print(Countries())
         
 
 class Labels:
