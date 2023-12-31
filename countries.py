@@ -35,3 +35,5 @@ class Countries(MsqlC):
         condicion = "Id={}".format(id)
         n = self.update(self.tabla,valores,condicion)
         return n   
+    
+    

@@ -1,8 +1,6 @@
 from tkinter import *
 from ventana import *
 
-
-
 def main():
         root = Tk()
         root.wm_title("Crud Python Mysql")

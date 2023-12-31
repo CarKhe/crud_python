@@ -7,11 +7,7 @@ class Botones:
           btn_name =  Button(frame,text=text,command=command, bg=bg,fg=fg)
           btn_name.place(x=x,y=y,width=width,height=height)
           
-    def salir():
-        exit()
     
-    def crear():
-       print(Countries())
         
 
 class Labels:
