@@ -1,5 +1,6 @@
 from conexion.conexion import MysqlConnection as MsqlC
 from tkinter import ttk
+from clases.assets import *
 
 class Countries(MsqlC):
     tabla = "countries"
@@ -24,9 +25,9 @@ class Countries(MsqlC):
         return datos
     
     def inserta_pais(self,ISO3, CountryName, Capital, CurrencyCode):
-        valores = "({},'{}','{}','{}')".format(ISO3, CountryName, Capital, CurrencyCode)
+        valores = "('{}','{}','{}','{}')".format(ISO3, CountryName, Capital, CurrencyCode)
         n = self.insert(self.tabla,self.columnas,valores)
-        return n    
+        return n
 
     def elimina_pais(self,id):
         condicion = "Id={}".format(id)
@@ -37,6 +38,9 @@ class Countries(MsqlC):
         valores="ISO3='{}', CountryName='{}', Capital='{}',CurrencyCode='{}'".format(ISO3, CountryName, Capital, CurrencyCode)
         condicion = "Id={}".format(id)
         n = self.update(self.tabla,valores,condicion)
-        return n   
+        return n  
+    
+    
+   
     
     
