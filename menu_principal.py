@@ -8,7 +8,7 @@ class MenuPrincipal(Pantalla):
     def __init__(self,titulo,w,h):
         Pantalla.__init__(self,titulo,w,h)
         self.ventana()
-        Cc.consultar(self.grid)
+        Cc.consultar(self,self.grid)
         Cc.cambiar_estado_inputs("disabled",self.txt_iso3,self.name,self.capital,self.code)
         Cc.cambiar_estado_bts("disabled",self.btn_save,self.btn_cancel)
         Cc.cambiar_estado_bts("normal",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)

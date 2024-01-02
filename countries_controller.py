@@ -6,7 +6,7 @@ from countries import Countries
 class CountriesController(Countries):
     
     def __init__(self):
-        Countries.__init__()
+        Countries.__init__(self)
     
     def create(self,txt_iso3,txt_name,txt_capital,txt_code,btn_save,btn_cancel,btn_create,btn_read,btn_update,btn_delete,obj):
         self.cambiar_estado_inputs("normal",txt_iso3,txt_name,txt_capital,txt_code)
@@ -23,7 +23,7 @@ class CountriesController(Countries):
         
     def save(self,txt_iso3,txt_name,txt_capital,txt_code,btn_save,btn_cancel,btn_create,btn_read,btn_update,btn_delete,obj):
         v = self.obtener_valores(txt_iso3,txt_name,txt_capital,txt_code)
-        Countries.inserta_pais(v[0],v[1],v[2],v[3])
+        self.inserta_pais(v[0],v[1],v[2],v[3])
         self.limpiar_consultas(obj)
         self.consultar(obj)
         self.limpiar_inputs(txt_iso3,txt_name,txt_capital,txt_code)
@@ -39,7 +39,7 @@ class CountriesController(Countries):
         r = messagebox.askquestion("Eliminar","Deseas elimianrlo?\n"+datos)
         
         if r == messagebox.YES:
-            Countries.elimina_pais(id)
+            self.elimina_pais(id)
             self.limpiar_consultas(obj)
             self.consultar()
             messagebox.showwarning("Exito!!","Los Datos fueron borrados :)")
@@ -108,7 +108,7 @@ class CountriesController(Countries):
         self.cambiar_state_input_all(state,*obj)
         
     def consultar(self,obj):
-        datos=Countries.consulta_paises()
+        datos=self.consulta_paises()
         self.mostrar_valores(obj,datos)
     
     def limpiar_consultas(self,obj):
