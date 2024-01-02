@@ -1,6 +1,7 @@
 from pantalla import *
 from clases.assets import *
 from tkinter import ttk
+from tkinter import messagebox
 from countries import Countries 
 from countries_controller import CountriesController as Cc
 
@@ -39,6 +40,14 @@ class MenuPrincipal(Pantalla,Countries):
     def obtener_valores(self,*obj):
         valores = Cc.obtener_valor_input(*obj)
         return valores
+    
+    def focus_grid_consulta(self,obj):
+        v=Cc.focus_campo_grid(obj)
+        return v
+    
+    def mostrar_row_seleccionado(self,obj,selected):
+        v,t = Cc.mostrar_row(obj,selected)
+        return v,t
             
     def create(self):
         self.cambiar_estado_inputs("normal",self.txt_iso3,self.name,self.capital,self.code)
@@ -62,6 +71,24 @@ class MenuPrincipal(Pantalla,Countries):
         self.cambiar_estado_inputs("disabled",self.txt_iso3,self.name,self.capital,self.code)
         self.cambiar_estado_bts("disabled",self.btn_save,self.btn_cancel)
         self.cambiar_estado_bts("normal",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
+    
+    def delete(self):
+        selected = self.focus_grid_consulta(self.grid)
+        row,id = self.mostrar_row_seleccionado(self.grid,selected)
+        datos = str(id)+', '+row[0]+', '+row[1]
+        r = messagebox.askquestion("Eliminar","Deseas elimianrlo?\n"+datos)
+        
+        if r == messagebox.YES:
+            self.elimina_pais(id)
+            self.limpiar_consultas(self.grid)
+            self.consultar()
+            messagebox.showwarning("Exito!!","Los Datos fueron borrados :)")
+            self.cambiar_estado_inputs("disabled",self.txt_iso3,self.name,self.capital,self.code)
+            self.cambiar_estado_bts("disabled",self.btn_save,self.btn_cancel)
+            self.cambiar_estado_bts("normal",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
+        else:
+            print("Dato no borrado")
+            
         
  
     def create_widgets(self):
@@ -71,7 +98,7 @@ class MenuPrincipal(Pantalla,Countries):
         self.btn_create = Botones.agregar_boton("btn_create",frame1,"Create",self.create,"blue","white",5,50,80,30)
         self.btn_read = Botones.agregar_boton("btn_read",frame1,"Read",self.salir,"blue","white",5,90,80,30)
         self.btn_update = Botones.agregar_boton("btn_update",frame1,"Update",self.salir,"blue","white",5,130,80,30)
-        self.btn_delete = Botones.agregar_boton("btn_delete",frame1,"Delete",self.salir,"blue","white",5,170,80,30)
+        self.btn_delete = Botones.agregar_boton("btn_delete",frame1,"Delete",self.delete,"blue","white",5,170,80,30)
 
         frame2 = Frame(self,bg="#d3dde3")
         frame2.place(x=95,y=0,width=150,height=259)
@@ -88,11 +115,14 @@ class MenuPrincipal(Pantalla,Countries):
         self.btn_save = Botones.agregar_boton("btn_save",frame2,"Save",self.save,"green","white",10,210,60,30)
         self.btn_cancel = Botones.agregar_boton("btn_cancel",frame2,"Cancel",self.cancel,"red","white",80,210,60,30)
         
+        frame3 = Frame(self,bg="#bfdaff")
+        frame3.place(x=255,y=0,width=420,height=259)
         
-        self.grid = ttk.Treeview(self,columns=("col1", "col2", "col3", "col4"))
         
-        self.grid.column("#0",width=50)
-        self.grid.column("col1",width=60, anchor=CENTER)
+        self.grid = ttk.Treeview(frame3,columns=("col1", "col2", "col3", "col4"))
+        
+        self.grid.column("#0",width=60)
+        self.grid.column("col1",width=70, anchor=CENTER)
         self.grid.column("col2",width=90, anchor=CENTER)
         self.grid.column("col3",width=90, anchor=CENTER)
         self.grid.column("col4",width=90, anchor=CENTER)
@@ -103,6 +133,10 @@ class MenuPrincipal(Pantalla,Countries):
         self.grid.heading("col3",text="Capital", anchor=CENTER)
         self.grid.heading("col4",text="Currency Code", anchor=CENTER)
         
-        self.grid.place(x=247,y=0,width=420,height=259)
+        self.grid.pack(side=LEFT, fill=Y,)
         
+        scroll_bar = Scrollbar(frame3, orient=VERTICAL) 
+        scroll_bar.pack( side = RIGHT, fill = Y ) 
+        self.grid.config(yscrollcommand=scroll_bar.set)
+        scroll_bar.config( command = self.grid.yview ) 
         

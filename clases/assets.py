@@ -14,11 +14,19 @@ class Botones:
           
 
 class Labels:
+    
     def agregar_label(obj,frame,text,x,y):
           obj = Label(frame,text=text)
           obj.place(x=x,y=y)
           return obj
-
+    def focus_label(obj):
+        return obj.focus()
+    
+    def mostrar_row(obj,selected):
+        val = obj.item(selected,'values')
+        txt = obj.item(selected,'text')
+        return val, txt
+        
 class Inputs:
     def agregar_input(obj,frame,x,y,width,height,state):
           obj = Entry(frame)

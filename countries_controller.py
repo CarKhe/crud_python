@@ -35,7 +35,13 @@ class CountriesController:
     def limpiar_grid(obj):
         for item in obj.get_children():
             obj.delete(item)
-            
+    
+    def focus_campo_grid(obj):
+        return Labels.focus_label(obj)
+    
+    def mostrar_row(obj,selected):
+        x,y = Labels.mostrar_row(obj,selected)
+        return x,y      
             
     
     
