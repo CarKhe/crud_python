@@ -1,12 +1,12 @@
 from clases.assets import *
 from countries import Countries 
 from tkinter import messagebox
+from countries import Countries 
 
-
-class CountriesController:
+class CountriesController(Countries):
     
     def __init__(self):
-        self = self
+        Countries.__init__()
     
     def create(self,txt_iso3,txt_name,txt_capital,txt_code,btn_save,btn_cancel,btn_create,btn_read,btn_update,btn_delete,obj):
         self.cambiar_estado_inputs("normal",txt_iso3,txt_name,txt_capital,txt_code)

@@ -2,12 +2,11 @@ from pantalla import *
 from clases.assets import *
 from tkinter import ttk
 from countries_controller import CountriesController as Cc
-from countries import Countries 
 
-class MenuPrincipal(Pantalla,Cc):
+
+class MenuPrincipal(Pantalla):
     def __init__(self,titulo,w,h):
         Pantalla.__init__(self,titulo,w,h)
-        Cc.__init__(self)
         self.ventana()
         Cc.consultar(self.grid)
         Cc.cambiar_estado_inputs("disabled",self.txt_iso3,self.name,self.capital,self.code)
