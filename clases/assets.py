@@ -26,6 +26,12 @@ class Labels:
         val = obj.item(selected,'values')
         txt = obj.item(selected,'text')
         return val, txt
+    
+    def mostrar_valor(obj,row):
+            obj.insert("",END,text=row[0],values=(row[1],row[2],row[3],row[4]))
+    
+    def limpiar_grid(obj,item):
+            obj.delete(item)
         
 class Inputs:
     def agregar_input(obj,frame,x,y,width,height,state):

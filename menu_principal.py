@@ -1,93 +1,52 @@
 from pantalla import *
 from clases.assets import *
 from tkinter import ttk
-from tkinter import messagebox
-from countries import Countries 
+
 from countries_controller import CountriesController as Cc
 
-class MenuPrincipal(Pantalla,Countries):
+class MenuPrincipal(Pantalla,Cc):
     def __init__(self,titulo,w,h):
         Pantalla.__init__(self,titulo,w,h)
-        Countries.__init__(self)
+        Cc.__init__(self)
         self.create_widgets()
-        self.consultar()
-        self.cambiar_estado_inputs("disabled",self.txt_iso3,self.name,self.capital,self.code)
-        self.cambiar_estado_bts("disabled",self.btn_save,self.btn_cancel)
-        self.cambiar_estado_bts("normal",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
+        Cc.consultar(self,self.grid)
+        self.ddn()
         
     def salir(self):
         exit()
     
-    def limpiar_inputs(self,*obj):
-        Cc.limpiar_inputs_all(*obj)
-    
-    def focus_input(self):
-        Cc.focus_input(self.txt_iso3)
-    
-    def cambiar_estado_bts(self,state,*obj):
-        Cc.cambiar_state_btn(state,*obj)
-    
-    def cambiar_estado_inputs(self,state,*obj):
-        Cc.cambiar_state_input_all(state,*obj)
+    def ddn(self):
+        Cc.cambiar_state_input_all("disabled",self.txt_iso3,self.name,self.capital,self.code)
+        Cc.cambiar_state_btn("disabled",self.btn_save,self.btn_cancel)
+        Cc.cambiar_state_btn("normal",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
         
-    def consultar(self):
-        datos=self.consulta_paises()
-        Cc.mostrar_valores(self.grid,datos)
-    
-    def limpiar_consultas(self,obj):
-        Cc.limpiar_grid(obj)
-    
-    def obtener_valores(self,*obj):
-        valores = Cc.obtener_valor_input(*obj)
-        return valores
-    
-    def focus_grid_consulta(self,obj):
-        v=Cc.focus_campo_grid(obj)
-        return v
-    
-    def mostrar_row_seleccionado(self,obj,selected):
-        v,t = Cc.mostrar_row(obj,selected)
-        return v,t
-            
+    def nd(self):
+        Cc.cambiar_state_btn("normal",self.btn_save,self.btn_cancel)
+        Cc.cambiar_state_btn("disabled",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
+        
     def create(self):
-        self.cambiar_estado_inputs("normal",self.txt_iso3,self.name,self.capital,self.code)
-        self.limpiar_inputs(self.txt_iso3,self.name,self.capital,self.code)
-        self.focus_input()
-        self.cambiar_estado_bts("normal",self.btn_save,self.btn_cancel)
-        self.cambiar_estado_bts("disabled",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
+        Cc.cambiar_state_input_all("normal",self.txt_iso3,self.name,self.capital,self.code)
+        Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
+        Cc.focus_input(self.txt_iso3)
+        self.nd()
     
     def cancel(self):
-        self.limpiar_inputs(self.txt_iso3,self.name,self.capital,self.code)
-        self.cambiar_estado_inputs("disabled",self.txt_iso3,self.name,self.capital,self.code)
-        self.cambiar_estado_bts("disabled",self.btn_save,self.btn_cancel)
-        self.cambiar_estado_bts("normal",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
+        Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
+        self.ddn()
         
     def save(self):
-        v = self.obtener_valores(self.txt_iso3,self.name,self.capital,self.code)
-        self.inserta_pais(v[0],v[1],v[2],v[3])
-        self.limpiar_consultas(self.grid)
-        self.consultar()
-        self.limpiar_inputs(self.txt_iso3,self.name,self.capital,self.code)
-        self.cambiar_estado_inputs("disabled",self.txt_iso3,self.name,self.capital,self.code)
-        self.cambiar_estado_bts("disabled",self.btn_save,self.btn_cancel)
-        self.cambiar_estado_bts("normal",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
+        v = Cc.obtener_valor_input(self.txt_iso3,self.name,self.capital,self.code)
+        Cc.insertar(self,v[0],v[1],v[2],v[3])
+        Cc.limpiar_grid(self,self.grid)
+        Cc.consultar(self,self.grid)
+        Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
+        self.ddn()
     
     def delete(self):
-        selected = self.focus_grid_consulta(self.grid)
-        row,id = self.mostrar_row_seleccionado(self.grid,selected)
-        datos = str(id)+', '+row[0]+', '+row[1]
-        r = messagebox.askquestion("Eliminar","Deseas elimianrlo?\n"+datos)
-        
-        if r == messagebox.YES:
-            self.elimina_pais(id)
-            self.limpiar_consultas(self.grid)
-            self.consultar()
-            messagebox.showwarning("Exito!!","Los Datos fueron borrados :)")
-            self.cambiar_estado_inputs("disabled",self.txt_iso3,self.name,self.capital,self.code)
-            self.cambiar_estado_bts("disabled",self.btn_save,self.btn_cancel)
-            self.cambiar_estado_bts("normal",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
-        else:
-            print("Dato no borrado")
+        selected = Cc.focus_campo_grid(self.grid)
+        row,id = Cc.mostrar_row(self.grid,selected)
+        Cc.pregunta_eliminar(self,id,row,self.grid)
+        self.ddn()
             
         
  
@@ -139,4 +98,3 @@ class MenuPrincipal(Pantalla,Countries):
         scroll_bar.pack( side = RIGHT, fill = Y ) 
         self.grid.config(yscrollcommand=scroll_bar.set)
         scroll_bar.config( command = self.grid.yview ) 
-        

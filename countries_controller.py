@@ -1,7 +1,11 @@
 from clases.assets import *
+from countries import Countries 
+from tkinter import messagebox
 
-class CountriesController:
-        
+class CountriesController(Countries):
+    def __init__(self):
+        Countries.__init__(self)
+   
     def cambiar_state_input(obj):
         Inputs.cambiar_state_input(obj,"disabled")
     
@@ -28,13 +32,10 @@ class CountriesController:
         for i in obj:
             Botones.cambio_state_boton(i,state)
     
-    def mostrar_valores(obj,datos):
-         for row in datos:
-            obj.insert("",END,text=row[0],values=(row[1],row[2],row[3],row[4]))
             
-    def limpiar_grid(obj):
+    def limpiar_grid(self,obj):
         for item in obj.get_children():
-            obj.delete(item)
+            Labels.limpiar_grid(obj,item)
     
     def focus_campo_grid(obj):
         return Labels.focus_label(obj)
@@ -43,5 +44,22 @@ class CountriesController:
         x,y = Labels.mostrar_row(obj,selected)
         return x,y      
             
+    def consultar(self,obj):
+        datos=self.consulta_paises()
+        for row in datos:
+            Labels.mostrar_valor(obj,row)
     
+    def insertar(self,v0,v1,v2,v3):
+        self.inserta_pais(v0,v1,v2,v3)
+    
+    def pregunta_eliminar(self,id,row,obj):
+        datos = str(id)+', '+row[0]+', '+row[1]
+        r = messagebox.askquestion("Eliminar","¿Deseas elimianrlo?\n"+datos)
+        if r == messagebox.YES:
+            self.elimina_pais(id)
+            self.limpiar_grid(obj)
+            self.consultar(obj)
+            messagebox.showwarning("Exito!!","Los Datos fueron borrados :)")
+        else:
+            print("Dato no borrado")
     
