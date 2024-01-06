@@ -34,10 +34,10 @@ class Countries(MsqlC):
         n = self.delete_by_id(self.tabla,condicion)
         return n   
 
-    def modifica_pais(self,id, ISO3, CountryName, Capital, CurrencyCode):
-        valores="ISO3='{}', CountryName='{}', Capital='{}',CurrencyCode='{}'".format(ISO3, CountryName, Capital, CurrencyCode)
-        condicion = "Id={}".format(id)
-        n = self.update(self.tabla,valores,condicion)
+    def modifica_pais(self, ISO3, CountryName, Capital, CurrencyCode,id):
+        cond = "Id={}".format(id)
+        val="ISO3='{}', CountryName='{}', Capital='{}',CurrencyCode='{}'".format(ISO3, CountryName, Capital, CurrencyCode)
+        n = self.update_row(self.tabla,val,cond)
         return n  
     
     

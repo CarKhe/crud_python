@@ -23,7 +23,6 @@ class CountriesController(Countries):
            valores.append(val)
         return valores 
         
-  
     def limpiar_inputs_all(*obj):
         for i in obj:
             Inputs.limpiar_input(i)
@@ -32,7 +31,6 @@ class CountriesController(Countries):
         for i in obj:
             Botones.cambio_state_boton(i,state)
     
-            
     def limpiar_grid(self,obj):
         for item in obj.get_children():
             Labels.limpiar_grid(obj,item)
@@ -62,4 +60,17 @@ class CountriesController(Countries):
             messagebox.showwarning("Exito!!","Los Datos fueron borrados :)")
         else:
             print("Dato no borrado")
+            
+
     
+    
+    def actualizar(self,v0,v1,v2,v3,id):
+        self.modifica_pais(v0,v1,v2,v3,id)
+        
+    
+    
+    
+    
+    
+    
+   

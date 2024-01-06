@@ -42,7 +42,7 @@ class MysqlConnection:
         cur.close()
         return n  
     
-    def update(self,table,values,condition):
+    def update_row(self,table,values,condition):
         cur = self.cnn.cursor()
         cur.execute("UPDATE {} SET {} WHERE {}".format(table,values,condition))
         n=cur.rowcount

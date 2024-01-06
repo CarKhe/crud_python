@@ -1,7 +1,6 @@
 from pantalla import *
 from clases.assets import *
 from tkinter import ttk
-
 from countries_controller import CountriesController as Cc
 
 class MenuPrincipal(Pantalla,Cc):
@@ -19,10 +18,17 @@ class MenuPrincipal(Pantalla,Cc):
         Cc.cambiar_state_input_all("disabled",self.txt_iso3,self.name,self.capital,self.code)
         Cc.cambiar_state_btn("disabled",self.btn_save,self.btn_cancel)
         Cc.cambiar_state_btn("normal",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
+        self.btn_save.configure(text="Save",bg="green",command=self.create)
         
     def nd(self):
         Cc.cambiar_state_btn("normal",self.btn_save,self.btn_cancel)
         Cc.cambiar_state_btn("disabled",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
+    
+    def ndi(self):
+        Cc.cambiar_state_input_all("normal",self.txt_iso3,self.name,self.capital,self.code,self.btn_save,self.btn_cancel)
+        Cc.cambiar_state_btn("disabled",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
+        Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
+    
         
     def create(self):
         Cc.cambiar_state_input_all("normal",self.txt_iso3,self.name,self.capital,self.code)
@@ -32,6 +38,7 @@ class MenuPrincipal(Pantalla,Cc):
     
     def cancel(self):
         Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
+        self.btn_save.configure(text="Save",bg="green",command=self.create)
         self.ddn()
         
     def save(self):
@@ -47,6 +54,27 @@ class MenuPrincipal(Pantalla,Cc):
         row,id = Cc.mostrar_row(self.grid,selected)
         Cc.pregunta_eliminar(self,id,row,self.grid)
         self.ddn()
+        
+    def pre_update(self):
+        selected = Cc.focus_campo_grid(self.grid)
+        row,id = Cc.mostrar_row(self.grid,selected)
+        self.ndi()
+        if id != '':
+            self.txt_iso3.insert(0,row[0])
+            self.name.insert(0,row[1])
+            self.capital.insert(0,row[2])
+            self.code.insert(0,row[3])
+            self.btn_save.configure(text="Modificar",bg="orange",command= lambda: self.act(id))
+        else:
+            print("No hay valor")
+    
+    def act(self,id):
+        v = Cc.obtener_valor_input(self.txt_iso3,self.name,self.capital,self.code)
+        Cc.actualizar(self,v[0],v[1],v[2],v[3],id)
+        Cc.limpiar_grid(self,self.grid)
+        Cc.consultar(self,self.grid)
+        Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
+        self.ddn()
             
         
  
@@ -56,7 +84,7 @@ class MenuPrincipal(Pantalla,Cc):
         
         self.btn_create = Botones.agregar_boton("btn_create",frame1,"Create",self.create,"blue","white",5,50,80,30)
         self.btn_read = Botones.agregar_boton("btn_read",frame1,"Read",self.salir,"blue","white",5,90,80,30)
-        self.btn_update = Botones.agregar_boton("btn_update",frame1,"Update",self.salir,"blue","white",5,130,80,30)
+        self.btn_update = Botones.agregar_boton("btn_update",frame1,"Update",self.pre_update,"blue","white",5,130,80,30)
         self.btn_delete = Botones.agregar_boton("btn_delete",frame1,"Delete",self.delete,"blue","white",5,170,80,30)
 
         frame2 = Frame(self,bg="#d3dde3")
@@ -98,3 +126,5 @@ class MenuPrincipal(Pantalla,Cc):
         scroll_bar.pack( side = RIGHT, fill = Y ) 
         self.grid.config(yscrollcommand=scroll_bar.set)
         scroll_bar.config( command = self.grid.yview ) 
+        
+        self.grid['selectmode'] = 'browse'

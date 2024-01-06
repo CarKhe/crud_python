@@ -3,15 +3,18 @@ from tkinter import ttk
 from countries import *
 
 class Botones:
+ 
     def agregar_boton(obj,frame,text,command,bg,fg,x,y,width,height):
           obj =  Button(frame,text=text,command=command, bg=bg,fg=fg)
           obj.place(x=x,y=y,width=width,height=height)
           return obj
     
     def cambio_state_boton(obj,state):
-        obj.configure(state=state)         
-          
-          
+        obj.configure(state=state)   
+    
+    def cambio_btn_modificar(obj,command):
+        obj.configure(text="Modificar",bg="orange",command=command)
+    
 
 class Labels:
     
@@ -28,10 +31,13 @@ class Labels:
         return val, txt
     
     def mostrar_valor(obj,row):
-            obj.insert("",END,text=row[0],values=(row[1],row[2],row[3],row[4]))
+        obj.insert("",END,text=row[0],values=(row[1],row[2],row[3],row[4]))
     
     def limpiar_grid(obj,item):
-            obj.delete(item)
+        obj.delete(item)
+    
+    def mostrar_input(obj,value):
+        obj.insert(0,value)
         
 class Inputs:
     def agregar_input(obj,frame,x,y,width,height,state):
@@ -51,4 +57,6 @@ class Inputs:
     
     def get_valor(obj):
         return obj.get()
+    
+   
 
