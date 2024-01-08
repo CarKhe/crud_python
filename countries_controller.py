@@ -1,6 +1,8 @@
 from clases.assets import *
 from countries import Countries 
 from tkinter import messagebox
+from tkinter.simpledialog import askstring
+
 
 class CountriesController(Countries):
     def __init__(self):
@@ -60,15 +62,38 @@ class CountriesController(Countries):
             messagebox.showwarning("Exito!!","Los Datos fueron borrados :)")
         else:
             print("Dato no borrado")
-            
-
     
+    def preguntar_valor_buscar(self):
+        pais = askstring('pais','¿Qué pais quieres buscar?')
+        datos=self.buscar_pais(pais)
+        if datos != None:
+            rst = self.dividir_parametros(datos)
+            messagebox.showinfo('Resultado', 'Resultado:\n {}'.format(rst))
+        else:
+            messagebox.showinfo('Resultado', 'No Hay Resultado')
+    
+    
+    
+        
+        
+        
+    def pre_actualizar(id,row,*obj):
+        if id != '':
+            v=0
+            for i in obj:
+                Labels.mostrar_input(i,row[v])
+                v+=1 
+                
+        else:
+            print("No hay valor")
     
     def actualizar(self,v0,v1,v2,v3,id):
         self.modifica_pais(v0,v1,v2,v3,id)
         
+ 
+ 
     
-    
+
     
     
     

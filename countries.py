@@ -17,11 +17,15 @@ class Countries(MsqlC):
     def consulta_paises(self):
         datos = self.search_all(f"SELECT * FROM {self.tabla}")
         return datos
-        
-
-    def buscar_pais(self,id):
-        condicion = "Id={}".format(id)
-        datos = self.search_all_by_id("countries",condicion)  
+    
+    def buscar_pais(self,val):
+        condicion = "CountryName='{}'".format(val)
+        datos = self.search_select_columns(self.tabla,condicion,"ISO3","CountryName","Capital","CurrencyCode")  
+        return datos
+    
+    def buscar_pais_id(self,val):
+        condicion = "Id={}".format(val)
+        datos = self.search_all_by_condition("countries",condicion)  
         return datos
     
     def inserta_pais(self,ISO3, CountryName, Capital, CurrencyCode):
@@ -40,6 +44,14 @@ class Countries(MsqlC):
         n = self.update_row(self.tabla,val,cond)
         return n  
     
+    def dividir_parametros(self,datos):
+        rst=''
+        campos=("ISO3", "CountryName", "Capital", "CurrencyCode")
+        v=0
+        for i in datos:
+            rst = rst + f'{campos[v]} : {i}\n'
+            v+=1
+        return rst
     
    
     

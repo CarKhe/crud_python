@@ -59,14 +59,9 @@ class MenuPrincipal(Pantalla,Cc):
         selected = Cc.focus_campo_grid(self.grid)
         row,id = Cc.mostrar_row(self.grid,selected)
         self.ndi()
-        if id != '':
-            self.txt_iso3.insert(0,row[0])
-            self.name.insert(0,row[1])
-            self.capital.insert(0,row[2])
-            self.code.insert(0,row[3])
-            self.btn_save.configure(text="Modificar",bg="orange",command= lambda: self.act(id))
-        else:
-            print("No hay valor")
+        Cc.pre_actualizar(id,row,self.txt_iso3,self.name,self.capital,self.code)
+        self.btn_save.configure(text="Modificar",bg="orange",command= lambda: self.act(id))
+    
     
     def act(self,id):
         v = Cc.obtener_valor_input(self.txt_iso3,self.name,self.capital,self.code)
@@ -76,14 +71,15 @@ class MenuPrincipal(Pantalla,Cc):
         Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
         self.ddn()
             
-        
+    def read(self):
+        Cc.preguntar_valor_buscar(self)
  
     def create_widgets(self):
         frame1 = Frame(self,bg="#bfdaff")
         frame1.place(x=0,y=0,width=93,height=259)
         
         self.btn_create = Botones.agregar_boton("btn_create",frame1,"Create",self.create,"blue","white",5,50,80,30)
-        self.btn_read = Botones.agregar_boton("btn_read",frame1,"Read",self.salir,"blue","white",5,90,80,30)
+        self.btn_read = Botones.agregar_boton("btn_read",frame1,"Read",self.read,"blue","white",5,90,80,30)
         self.btn_update = Botones.agregar_boton("btn_update",frame1,"Update",self.pre_update,"blue","white",5,130,80,30)
         self.btn_delete = Botones.agregar_boton("btn_delete",frame1,"Delete",self.delete,"blue","white",5,170,80,30)
 

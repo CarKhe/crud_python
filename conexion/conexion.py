@@ -19,12 +19,24 @@ class MysqlConnection:
         cur.close()    
         return data
     
-    def search_all_by_id(self, table,condition):
+    def search_all_by_condition(self, table,condition):
         cur = self.cnn.cursor()
         cur.execute("SELECT * FROM {} WHERE {}".format(table,condition))
         datos = cur.fetchone()
         cur.close()    
         return datos
+    
+    def search_select_columns(self, table,condition,*columns):
+        cur = self.cnn.cursor()
+        col=''
+        for i in columns:
+            col = col + f'{i},'    
+        col = col[:-1]
+        cur.execute("SELECT {} FROM {} WHERE {}".format(col,table,condition))
+        datos = cur.fetchone()
+        cur.close()    
+        return datos
+    
     
     def insert(self,table,columns,values):
         cur = self.cnn.cursor()
@@ -49,6 +61,7 @@ class MysqlConnection:
         self.cnn.commit()    
         cur.close()
         return n   
+
 
 
 
