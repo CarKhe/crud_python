@@ -1,4 +1,5 @@
 from clases.assets import *
+from clases.validacion import Validacion
 from countries import Countries 
 from tkinter import messagebox
 from tkinter.simpledialog import askstring
@@ -50,6 +51,10 @@ class CountriesController(Countries):
             Labels.mostrar_valor(obj,row)
     
     def insertar(self,v0,v1,v2,v3):
+        v0 = str(v0).upper()
+        v1 = str(v1).capitalize()
+        v2 = str(v2).capitalize()
+        v3 = str(v3).upper()
         self.inserta_pais(v0,v1,v2,v3)
     
     def pregunta_eliminar(self,id,row,obj):
@@ -84,7 +89,30 @@ class CountriesController(Countries):
     
     def actualizar(self,v0,v1,v2,v3,id):
         self.modifica_pais(v0,v1,v2,v3,id)
-        
+    
+    
+    def validar_campos(self,v,id=0):
+        v0_val = Validacion.es_alfabetico(v[0],3)
+        v1_val = Validacion.es_alfabetico(v[1],64)
+        v2_val = Validacion.es_alfabetico(v[2],64)
+        v3_val = Validacion.es_alfabetico(v[3],3)
+        if v0_val & v1_val & v2_val & v3_val:
+            if id == 0:
+                self.insertar(v[0],v[1],v[2],v[3])
+                return True
+            else:
+                self.actualizar(v[0],v[1],v[2],v[3],id)
+                return True
+        else:
+            return False
+    
+    
+    def mensaje_insertar(res): 
+        if res:
+            messagebox.showinfo('Mensaje', '¡Valor Guardado!')
+        else:
+            messagebox.showinfo('Mensaje', '¡Error al Insertar, Revisa tus datos!')
+                
         
  
  

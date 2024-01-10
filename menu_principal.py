@@ -32,11 +32,15 @@ class MenuPrincipal(Pantalla,Cc):
     
     def save(self):
         v = Cc.obtener_valor_input(self.txt_iso3,self.name,self.capital,self.code)
-        Cc.insertar(self,v[0],v[1],v[2],v[3])
-        Cc.limpiar_grid(self,self.grid)
-        Cc.consultar(self,self.grid)
-        Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
-        self.ddn()
+        res = Cc.validar_campos(self,v)
+        if res:
+            Cc.mensaje_insertar(res)
+            Cc.limpiar_grid(self,self.grid)
+            Cc.consultar(self,self.grid)
+            Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
+            self.ddn()
+        else:
+            Cc.mensaje_insertar(res)
         
         
     def create(self):
@@ -68,12 +72,17 @@ class MenuPrincipal(Pantalla,Cc):
     
     def act(self,id):
         v = Cc.obtener_valor_input(self.txt_iso3,self.name,self.capital,self.code)
-        Cc.actualizar(self,v[0],v[1],v[2],v[3],id)
-        Cc.limpiar_grid(self,self.grid)
-        Cc.consultar(self,self.grid)
-        Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
-        self.btn_save.configure(text="Save",bg="green",command=self.create)
-        self.ddn()
+        res = Cc.validar_campos(self,v,id)
+        if res:
+            Cc.mensaje_insertar(res)
+            Cc.limpiar_grid(self,self.grid)
+            Cc.consultar(self,self.grid)
+            Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
+            self.btn_save.configure(text="Save",bg="green",command=self.create)
+            self.ddn()
+        else:
+            Cc.mensaje_insertar(res)
+        
             
     def read(self):
         Cc.preguntar_valor_buscar(self)
