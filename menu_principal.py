@@ -18,7 +18,7 @@ class MenuPrincipal(Pantalla,Cc):
         Cc.cambiar_state_input_all("disabled",self.txt_iso3,self.name,self.capital,self.code)
         Cc.cambiar_state_btn("disabled",self.btn_save,self.btn_cancel)
         Cc.cambiar_state_btn("normal",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
-        self.btn_save.configure(text="Save",bg="green",command=self.create)
+        
         
     def nd(self):
         Cc.cambiar_state_btn("normal",self.btn_save,self.btn_cancel)
@@ -29,6 +29,14 @@ class MenuPrincipal(Pantalla,Cc):
         Cc.cambiar_state_btn("disabled",self.btn_create,self.btn_read,self.btn_update,self.btn_delete)
         Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
     
+    
+    def save(self):
+        v = Cc.obtener_valor_input(self.txt_iso3,self.name,self.capital,self.code)
+        Cc.insertar(self,v[0],v[1],v[2],v[3])
+        Cc.limpiar_grid(self,self.grid)
+        Cc.consultar(self,self.grid)
+        Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
+        self.ddn()
         
     def create(self):
         Cc.cambiar_state_input_all("normal",self.txt_iso3,self.name,self.capital,self.code)
@@ -38,16 +46,10 @@ class MenuPrincipal(Pantalla,Cc):
     
     def cancel(self):
         Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
-        self.btn_save.configure(text="Save",bg="green",command=self.create)
+        self.btn_save.configure(text="Save",bg="green",command= lambda:self.create)
         self.ddn()
         
-    def save(self):
-        v = Cc.obtener_valor_input(self.txt_iso3,self.name,self.capital,self.code)
-        Cc.insertar(self,v[0],v[1],v[2],v[3])
-        Cc.limpiar_grid(self,self.grid)
-        Cc.consultar(self,self.grid)
-        Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
-        self.ddn()
+    
     
     def delete(self):
         selected = Cc.focus_campo_grid(self.grid)
@@ -69,6 +71,7 @@ class MenuPrincipal(Pantalla,Cc):
         Cc.limpiar_grid(self,self.grid)
         Cc.consultar(self,self.grid)
         Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
+        self.btn_save.configure(text="Save",bg="green",command=self.create)
         self.ddn()
             
     def read(self):
@@ -95,7 +98,7 @@ class MenuPrincipal(Pantalla,Cc):
         Labels.agregar_label("lbl4",frame2,"Currency Code:",3,155)
         self.code = Inputs.agregar_input("txt_code",frame2,3,175,140,20,"normal")
         
-        self.btn_save = Botones.agregar_boton("btn_save",frame2,"Save",self.save,"green","white",10,210,60,30)
+        self.btn_save = Botones.agregar_boton("btn_guardar",frame2,"Guardar",self.save,"green","white",10,210,60,30)
         self.btn_cancel = Botones.agregar_boton("btn_cancel",frame2,"Cancel",self.cancel,"red","white",80,210,60,30)
         
         frame3 = Frame(self,bg="#bfdaff")
