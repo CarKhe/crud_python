@@ -71,12 +71,7 @@ class CountriesController(Countries):
             messagebox.showinfo('Resultado', 'Resultado:\n {}'.format(rst))
         else:
             messagebox.showinfo('Resultado', 'No Hay Resultado')
-    
-    
-    
-        
-        
-        
+
     def pre_actualizar(id,row,*obj):
         if id != '':
             v=0
@@ -89,6 +84,7 @@ class CountriesController(Countries):
     
     def actualizar(self,v0,v1,v2,v3,id):
         self.modifica_pais(v0,v1,v2,v3,id)
+        
         
  
  

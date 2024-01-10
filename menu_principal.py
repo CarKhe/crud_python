@@ -38,6 +38,7 @@ class MenuPrincipal(Pantalla,Cc):
         Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
         self.ddn()
         
+        
     def create(self):
         Cc.cambiar_state_input_all("normal",self.txt_iso3,self.name,self.capital,self.code)
         Cc.limpiar_inputs_all(self.txt_iso3,self.name,self.capital,self.code)
@@ -98,7 +99,7 @@ class MenuPrincipal(Pantalla,Cc):
         Labels.agregar_label("lbl4",frame2,"Currency Code:",3,155)
         self.code = Inputs.agregar_input("txt_code",frame2,3,175,140,20,"normal")
         
-        self.btn_save = Botones.agregar_boton("btn_guardar",frame2,"Guardar",self.save,"green","white",10,210,60,30)
+        self.btn_save = Botones.agregar_boton("btn_save",frame2,"Save",self.save,"green","white",10,210,60,30)
         self.btn_cancel = Botones.agregar_boton("btn_cancel",frame2,"Cancel",self.cancel,"red","white",80,210,60,30)
         
         frame3 = Frame(self,bg="#bfdaff")
